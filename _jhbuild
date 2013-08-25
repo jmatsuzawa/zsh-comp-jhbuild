@@ -1,0 +1,116 @@
+#compdef jhbuild
+
+_jhbuild() {
+  _arguments : \
+    '--no-interact[do not prompt for input]' \
+    '::jhbuild command:_jhbuild_commands' \
+    '*:: :_jhbuild_command_args'
+}
+
+(( $+functions[_jhbuild_commands] )) || _jhbuild_commands() {
+  local -a command_list
+  command_list=(
+    'autobuild:build modules non-interactively and upload results to JhAutobuild'
+    'bootstrap:build support tools'
+    'bot:control buildbot'
+    'build:update and compile all modules (the default)'
+    'buildone:update and compile one or more modules'
+    'checkbranches:check modules in GNOME Git repository have the correct branch definition'
+    'checkmodulesets:check if modules in JHBuild have the correct definition'
+    'clean:clean all modules'
+    'cleanone:clean one or more modules'
+    'dot:output a Graphviz dependency graph for one or more modules'
+    'goalreport:report GNOME modules status wrt various goals'
+    'gui:build targets from a GUI app'
+    'help:information about available JHBuild commands'
+    'info:display information about one or more modules'
+    'list:list the modules that would be built'
+    'make:compile and install the module for the current directory'
+    'rdepends:display reverse-dependencies of a module'
+    'run:run a command under the JHBuild environment'
+    'sanitycheck:check that required support tools are available'
+    'shell:start a shell under the JHBuild environment'
+    'snapshot:print out a moduleset for the exact versions that are checked out'
+    'sysdeps:check and install tarball dependencies using system packages'
+    'tinderbox:build modules non-interactively and store build logs'
+    'twoninetynine:report GNOME modules status wrt 3.0 goals'
+    'uninstall:uninstall all modules'
+    'update:update all modules from version control'
+    'updateone:update one or more modules from version control'
+  )
+  _describe -t commands 'jhbuild commands' command_list
+}
+
+_jhbuild_command_args() {
+  local cmd=$words[1]
+  (( $+functions[_jhbuild_${cmd}_args] )) && _jhbuild_${cmd}_args
+}
+
+_jhbuild_build_args() {
+  _arguments : \
+    '(-h --help)'{-h,--help}'[show this help message and exit]' \
+    '(-a --autogen)'{-a,--autogen}'[always run autogen.sh]' \
+    '--distclean[completely clean source tree]' \
+    '(-c --clean)'{-c,--clean}'[run make clean before make]' \
+    '--check[run make check after building]' \
+    '(-d --dist)'{-d,--dist}'[run make dist after building]' \
+    '--distcheck[run make distcheck after building]' \
+    '--ignore-suggests[ignore all soft-dependencies]' \
+    '(-n --no-network)'{-n,--no-network}'[skip version control update]' \
+    '(-q --quiet)'{-q,--quiet}'[quiet (no output)]' \
+    '(-s --skip)'{-s,--skip=}'[treat the given modules as up to date]:' \
+    '(-t --start-at)'{-t,--start-at=}'[start building at the given module]:' \
+    '--tags=TAGS[build only modules with the given tags]' \
+    '-D[set a sticky date when checking out modules]:' \
+    '(-x --no-xvfb)'{-x,--no-xvfb}'[run tests in real X and not in Xvfb]' \
+    '(-C --try-checkout)'{-C,--try-checkout}'[try to force checkout and autogen on failure]' \
+    '(-N --no-poison)'{-N,--no-poison}'[do not poison modules on failure]' \
+    '(-f --force)'{-f,--force}'[build even if policy says not to]' \
+    '--build-optional-modules[also build soft-dependencies that could be skipped]' \
+    '--min-age=TIME-SPEC[skip modules installed less than the given time ago]' \
+    '--nodeps[ignore missing system dependencies]' \
+    '*: :_jhbuild_modules'
+}
+
+
+_jhbuild_buildone_args() {
+  _arguments : \
+    '(-h --help)'{-h,--help}'[show this help message and exit]' \
+    '(-a --autogen)'{-a,--autogen}'[always run autogen.sh]' \
+    '--distclean[completely clean source tree]' \
+    '(-c --clean)'{-c,--clean}'[run make clean before make]' \
+    '--check[run make check after building]' \
+    '(-d --dist)'{-d,--dist}'[run make dist after building]' \
+    '--distcheck[run make distcheck after building]' \
+    '--ignore-suggests[ignore all soft-dependencies]' \
+    '(-n --no-network)'{-n,--no-network}'[skip version control update]' \
+    '(-q --quiet)'{-q,--quiet}'[quiet (no output)]' \
+    '(-s --skip)'{-s,--skip=}'[treat the given modules as up to date]:' \
+    '(-t --start-at)'{-t,--start-at=}'[start building at the given module]:' \
+    '--tags=TAGS[build only modules with the given tags]' \
+    '-D[set a sticky date when checking out modules]:' \
+    '(-x --no-xvfb)'{-x,--no-xvfb}'[run tests in real X and not in Xvfb]' \
+    '(-C --try-checkout)'{-C,--try-checkout}'[try to force checkout and autogen on failure]' \
+    '(-N --no-poison)'{-N,--no-poison}'[do not poison modules on failure]' \
+    '(-f --force)'{-f,--force}'[build even if policy says not to]' \
+    '--build-optional-modules[also build soft-dependencies that could be skipped]' \
+    '--min-age=TIME-SPEC[skip modules installed less than the given time ago]' \
+    '--nodeps[ignore missing system dependencies]' \
+    '*: :_jhbuild_modules'
+}
+
+_jhbuild_tinderbox_args() {
+  _arguments : \
+    '*: :_jhbuild_modules'
+}
+
+_jhbuild_modules() {
+  local -a module_list
+  if ! _retrieve_cache _jhbuild_modules; then
+    local conf=${HOME}/.config/jhbuildrc-nonetwork
+    module_list=(${(@f)"$(jhbuild -f $conf list $module 2>/dev/null)"})
+    _store_cache _jhbuild_modules module_list
+  fi
+  _describe -t modules 'modules' module_list
+}
+
