@@ -104,6 +104,16 @@ _jhbuild_tinderbox_args() {
     '*: :_jhbuild_modules'
 }
 
+_jhbuild_update_args() {
+  _arguments : \
+    '*: :_jhbuild_modules'
+}
+
+_jhbuild_updateone_args() {
+  _arguments : \
+    '*: :_jhbuild_modules'
+}
+
 _jhbuild_modules() {
   local -a module_list
   if ! _retrieve_cache _jhbuild_modules; then
