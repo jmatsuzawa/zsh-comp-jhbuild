@@ -99,6 +99,15 @@ _jhbuild_buildone_args() {
     '*: :_jhbuild_modules'
 }
 
+_jhbuild_run_args() {
+  local -a path_list
+  if ! _retrieve_cache _jhbuild_paths; then
+    path_list=(${(z)"$(jhbuild run zsh -c 'echo ${(u)path}')"})
+    _store_cache _jhbuild_paths path_list
+  fi
+  _path_files -W path_list
+}
+
 _jhbuild_tinderbox_args() {
   _arguments : \
     '*: :_jhbuild_modules'
