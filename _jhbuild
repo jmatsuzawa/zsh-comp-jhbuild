@@ -48,7 +48,7 @@ _jhbuild_command_args() {
 
 _jhbuild_build_args() {
   _arguments : \
-    '(-h --help)'{-h,--help}'[show this help message and exit]' \
+    '(-h --help)'{-h,--help}'[show the help message and exit]' \
     '(-a --autogen)'{-a,--autogen}'[always run autogen.sh]' \
     '--distclean[completely clean source tree]' \
     '(-c --clean)'{-c,--clean}'[run make clean before make]' \
@@ -75,7 +75,7 @@ _jhbuild_build_args() {
 
 _jhbuild_buildone_args() {
   _arguments : \
-    '(-h --help)'{-h,--help}'[show this help message and exit]' \
+    '(-h --help)'{-h,--help}'[show the help message and exit]' \
     '(-a --autogen)'{-a,--autogen}'[always run autogen.sh]' \
     '--distclean[completely clean source tree]' \
     '(-c --clean)'{-c,--clean}'[run make clean before make]' \
