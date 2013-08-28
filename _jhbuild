@@ -58,8 +58,8 @@ _jhbuild_build_args() {
     '--ignore-suggests[ignore all soft-dependencies]' \
     '(-n --no-network)'{-n,--no-network}'[skip version control update]' \
     '(-q --quiet)'{-q,--quiet}'[quiet (no output)]' \
-    '(-s --skip)'{-s,--skip=}'[treat the given modules as up to date]:' \
-    '(-t --start-at)'{-t,--start-at=}'[start building at the given module]:' \
+    '(-s --skip)'{-s,--skip=}'[treat the given modules as up to date]: :_jhbuild_modules' \
+    '(-t --start-at)'{-t,--start-at=}'[start building at the given module]: :_jhbuild_modules' \
     '--tags=TAGS[build only modules with the given tags]' \
     '-D[set a sticky date when checking out modules]:' \
     '(-x --no-xvfb)'{-x,--no-xvfb}'[run tests in real X and not in Xvfb]' \
@@ -67,7 +67,7 @@ _jhbuild_build_args() {
     '(-N --no-poison)'{-N,--no-poison}'[do not poison modules on failure]' \
     '(-f --force)'{-f,--force}'[build even if policy says not to]' \
     '--build-optional-modules[also build soft-dependencies that could be skipped]' \
-    '--min-age=TIME-SPEC[skip modules installed less than the given time ago]' \
+    '--min-age=[skip modules installed less than the given time ago]' \
     '--nodeps[ignore missing system dependencies]' \
     '*: :_jhbuild_modules'
 }
@@ -85,8 +85,8 @@ _jhbuild_buildone_args() {
     '--ignore-suggests[ignore all soft-dependencies]' \
     '(-n --no-network)'{-n,--no-network}'[skip version control update]' \
     '(-q --quiet)'{-q,--quiet}'[quiet (no output)]' \
-    '(-s --skip)'{-s,--skip=}'[treat the given modules as up to date]:' \
-    '(-t --start-at)'{-t,--start-at=}'[start building at the given module]:' \
+    '(-s --skip)'{-s,--skip=}'[treat the given modules as up to date]: :_jhbuild_modules' \
+    '(-t --start-at)'{-t,--start-at=}'[start building at the given module]: :_jhbuild_modules' \
     '--tags=TAGS[build only modules with the given tags]' \
     '-D[set a sticky date when checking out modules]:' \
     '(-x --no-xvfb)'{-x,--no-xvfb}'[run tests in real X and not in Xvfb]' \
@@ -94,7 +94,7 @@ _jhbuild_buildone_args() {
     '(-N --no-poison)'{-N,--no-poison}'[do not poison modules on failure]' \
     '(-f --force)'{-f,--force}'[build even if policy says not to]' \
     '--build-optional-modules[also build soft-dependencies that could be skipped]' \
-    '--min-age=TIME-SPEC[skip modules installed less than the given time ago]' \
+    '--min-age=[skip modules installed less than the given time ago]' \
     '--nodeps[ignore missing system dependencies]' \
     '*: :_jhbuild_modules'
 }
