@@ -110,6 +110,19 @@ _jhbuild_run_args() {
 
 _jhbuild_tinderbox_args() {
   _arguments : \
+    '(-h --help)'{-h,--help}'[show the help message and exit]' \
+    '(-a --autogen)'{-a,--autogen}'[always run autogen.sh]' \
+    '--distclean[completely clean source tree]' \
+    '(-c --clean)'{-c,--clean}'[run make clean before make]' \
+    '(-n --no-network)'{-n,--no-network}'[skip version control update]' \
+    '(-o --output)'{-o,--output=}'[directory to store build logs in]: :_path_files -/' \
+    '(-s --skip)'{-s,--skip=}'[treat the given modules as up to date]: :_jhbuild_modules' \
+    '(-t --start-at)'{-t,--start-at=}'[start building at the given module]: :_jhbuild_modules' \
+    '-D[set a sticky date when checking out modules]:' \
+    '(-C --try-checkout)'{-C,--try-checkout}'[try to force checkout and autogen on failure]' \
+    '(-N --no-poison)'{-N,--no-poison}'[do not poison modules on failure]' \
+    '(-f --force)'{-f,--force}'[build even if policy says not to]' \
+    '--nodeps[ignore missing system dependencies]' \
     '*: :_jhbuild_modules'
 }
 
