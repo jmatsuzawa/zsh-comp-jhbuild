@@ -105,7 +105,11 @@ _jhbuild_run_args() {
     path_list=(${(z)"$(jhbuild run zsh -c 'echo ${(u)path}')"})
     _store_cache _jhbuild_paths path_list
   fi
-  _path_files -W path_list
+  _arguments : \
+    '(-h --help)'{-h,--help}'[show this help message and exit]' \
+    '--in-builddir=[run command in build dir of the given module]: :_jhbuild_modules' \
+    '--in-checkoutdir=[run command in checkout dir of the given module]: :_jhbuild_modules' \
+    '*: :_path_files -W path_list'
 }
 
 _jhbuild_tinderbox_args() {
