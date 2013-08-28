@@ -112,6 +112,13 @@ _jhbuild_run_args() {
     '*: :_path_files -W path_list'
 }
 
+_jhbuild_sysdeps_args() {
+  _arguments : \
+    '(-h --help)'{-h,--help}'[show the help message and exit]' \
+    '--install[install pkg-config modules via system]' \
+    '*: :_jhbuild_modules'
+}
+
 _jhbuild_tinderbox_args() {
   _arguments : \
     '(-h --help)'{-h,--help}'[show the help message and exit]' \
