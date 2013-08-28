@@ -99,6 +99,12 @@ _jhbuild_buildone_args() {
     '*: :_jhbuild_modules'
 }
 
+_jhbuild_info_args() {
+  _arguments : \
+    '(-h --help)'{-h,--help}'[show the help message and exit]' \
+    '*: :_jhbuild_modules'
+}
+
 _jhbuild_run_args() {
   local -a path_list
   if ! _retrieve_cache _jhbuild_paths; then
