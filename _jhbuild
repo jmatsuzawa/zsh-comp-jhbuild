@@ -127,7 +127,7 @@ _jhbuild_modules() {
   local -a module_list
   if ! _retrieve_cache _jhbuild_modules; then
     local conf=${HOME}/.config/jhbuildrc-nonetwork
-    module_list=(${(@f)"$(jhbuild -f $conf list $module 2>/dev/null)"})
+    module_list=(${(@f)"$(jhbuild -f $conf list -a $module 2>/dev/null)"})
     _store_cache _jhbuild_modules module_list
   fi
   _describe -t modules 'modules' module_list
