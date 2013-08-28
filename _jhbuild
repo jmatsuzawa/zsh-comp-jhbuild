@@ -105,6 +105,23 @@ _jhbuild_info_args() {
     '*: :_jhbuild_modules'
 }
 
+_jhbuild_make_args() {
+  _arguments : \
+    '(-h --help)'{-h,--help}'[show the help message and exit]' \
+    '(-a --autogen)'{-a,--autogen}'[always run autogen.sh]' \
+    '(-c --clean)'{-c,--clean}'[run make clean before make]' \
+    '--check[run make check after building]' \
+    '(-q --quiet)'{-q,--quiet}'[quiet (no output)]'
+}
+
+_jhbuild_rdepends_args() {
+  _arguments : \
+    '(-h --help)'{-h,--help}'[show the help message and exit]' \
+    '--dependencies[display dependency path next to modules]' \
+    '--direct[limit display to modules directly depending on given module]' \
+    '*: :_jhbuild_modules'
+}
+
 _jhbuild_run_args() {
   local -a path_list
   if ! _retrieve_cache _jhbuild_paths; then
