@@ -180,3 +180,4 @@ _jhbuild() {
   _describe -t modules 'modules' module_list
 }
 
+_jhbuild
