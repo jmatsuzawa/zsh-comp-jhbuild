@@ -105,6 +105,19 @@ _jhbuild() {
     '*: :_jhbuild_modules'
 }
 
+(( $+functions[_jhbuild_list_args] )) || _jhbuild_list_args() {
+  _arguments : \
+    '(-h --help)'{-h,--help}'[show the help message and exit]' \
+    '(-r --show-revision)'{-r,--show-revision}'[show which revision will be built]' \
+    '(-s --skip)'{-s,--skip=}'[treat the given modules as up to date]: :_jhbuild_modules' \
+    '(-t --start-at)'{-t,--start-at=}'[start list at the given module]: :_jhbuild_modules' \
+    '--tags=[build only modules with the given tags]:' \
+    '--ignore-suggests[ignore all soft-dependencies]' \
+    '--list-optional-modules[also list soft-dependencies that could be skipped]' \
+    '(-a --all-modules)'{-a,--all-modules}'[list all modules, not only those that would be built]' \
+    '*: :_jhbuild_modules'
+}
+
 (( $+functions[_jhbuild_make_args] )) || _jhbuild_make_args() {
   _arguments : \
     '(-h --help)'{-h,--help}'[show the help message and exit]' \
