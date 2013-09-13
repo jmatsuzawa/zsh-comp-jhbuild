@@ -99,6 +99,12 @@ _jhbuild() {
     '*: :_jhbuild_modules'
 }
 
+(( $+functions[_jhbuild_cleanone_args] )) || _jhbuild_cleanone_args() {
+  _arguments : \
+    '(-h --help)'{-h,--help}'[show the help message and exit]' \
+    '*: :_jhbuild_modules'
+}
+
 (( $+functions[_jhbuild_info_args] )) || _jhbuild_info_args() {
   _arguments : \
     '(-h --help)'{-h,--help}'[show the help message and exit]' \
