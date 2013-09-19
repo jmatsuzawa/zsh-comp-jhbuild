@@ -181,6 +181,12 @@ _jhbuild() {
 
 (( $+functions[_jhbuild_update_args] )) || _jhbuild_update_args() {
   _arguments : \
+    '(-h --help)'{-h,--help}'[show the help message and exit]' \
+    '(-s --skip)'{-s,--skip=}'[treat the given modules as up to date]: :_jhbuild_modules' \
+    '(-t --start-at)'{-t,--start-at=}'[start updating at the given module]: :_jhbuild_modules' \
+    '--tags=[update only modules with the given tags]:' \
+    '-D[set a sticky date when checking out modules]:' \
+    '--ignore-suggests[ignore all soft-dependencies]' \
     '*: :_jhbuild_modules'
 }
 
