@@ -143,10 +143,7 @@ _jhbuild() {
 
 (( $+functions[_jhbuild_run_args] )) || _jhbuild_run_args() {
   local -a path_list
-  if ! _retrieve_cache _jhbuild_paths; then
-    path_list=(${(z)"$(jhbuild run zsh -c 'echo ${(u)path}')"})
-    _store_cache _jhbuild_paths path_list
-  fi
+  path_list=(${(z)"$(jhbuild run zsh -c 'echo ${(u)path}')"})
   _arguments : \
     '(-h --help)'{-h,--help}'[show the help message and exit]' \
     '--in-builddir=[run command in build dir of the given module]: :_jhbuild_modules' \
@@ -196,13 +193,25 @@ _jhbuild() {
 }
 
 (( $+functions[_jhbuild_modules] )) || _jhbuild_modules() {
-  local -a module_list
-  if ! _retrieve_cache _jhbuild_modules; then
-    local conf=${HOME}/.config/jhbuildrc-nonetwork
-    module_list=(${(@f)"$(jhbuild -f $conf list -a $module 2>/dev/null)"})
-    _store_cache _jhbuild_modules module_list
+  local update_policy
+  zstyle -s ":completion:${curcontext}:" cache-policy update_policy
+  if [[ -z "$update_policy" ]]; then
+    zstyle ":completion:${curcontext}:" cache-policy _jhbuild_caching_policy
   fi
-  _describe -t modules 'modules' module_list
+
+  if ( [[ ${+_jhbuild_module_list} -eq 0 ]] || _cache_invalid _jhbuild_modules ) &&
+     ! _retrieve_cache _jhbuild_modules; then
+    local conf=${HOME}/.config/jhbuildrc-nonetwork
+    _jhbuild_module_list=(${(@f)"$(jhbuild -f $conf list -a $module 2>/dev/null)"})
+    _store_cache _jhbuild_modules _jhbuild_module_list
+  fi
+  _describe -t modules 'modules' _jhbuild_module_list
+}
+
+(( $+functions[_jhbuild_caching_policy] )) || _jhbuild_caching_policy() {
+  local -a oldp
+  oldp=("$1"(Nm+7) )
+  (( $#oldp ))
 }
 
 _jhbuild
