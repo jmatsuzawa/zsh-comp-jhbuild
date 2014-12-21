@@ -209,7 +209,7 @@ _jhbuild() {
 
 (( $+functions[_jhbuild_caching_policy] )) || _jhbuild_caching_policy() {
   local -a oldp
-  oldp=("$1"(Nm+7) )
+  oldp=( "$1"(Nm+7) )
   (( $#oldp ))
 }
 
